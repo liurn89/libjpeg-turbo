@@ -641,6 +641,7 @@ struct jpeg_decompress_struct {
 #endif
   boolean progressive_mode;     /* TRUE if SOFn specifies progressive mode */
   boolean arith_code;           /* TRUE=arithmetic coding, FALSE=Huffman */
+  boolean turn_off_color_space;
 
   UINT8 arith_dc_L[NUM_ARITH_TBLS]; /* L values for DC arith-coding tables */
   UINT8 arith_dc_U[NUM_ARITH_TBLS]; /* U values for DC arith-coding tables */

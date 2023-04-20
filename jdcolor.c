@@ -831,7 +831,15 @@ _jinit_color_deconverter(j_decompress_ptr cinfo)
   case JCS_EXT_ABGR:
   case JCS_EXT_ARGB:
     if (cinfo->master->lossless && cinfo->jpeg_color_space != JCS_RGB)
-      ERREXIT(cinfo, JERR_CONVERSION_NOTIMPL);
+      {
+        if (cinfo->turn_off_color_space)
+        {
+            cconvert->pub._color_convert = null_convert;
+            break;
+        }
+
+        ERREXIT(cinfo, JERR_CONVERSION_NOTIMPL);
+      }
     cinfo->out_color_components = rgb_pixelsize[cinfo->out_color_space];
     if (cinfo->jpeg_color_space == JCS_YCbCr) {
 #ifdef WITH_SIMD

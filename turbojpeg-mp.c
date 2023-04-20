@@ -186,6 +186,7 @@ DLLEXPORT int GET_NAME(tj3Decompress, BITS_IN_JSAMPLE)
 
   dinfo->scale_num = this->scalingFactor.num;
   dinfo->scale_denom = this->scalingFactor.denom;
+  dinfo->turn_off_color_space = this->turnOffColorSpace;
 
   jpeg_start_decompress(dinfo);
 

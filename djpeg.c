@@ -232,7 +232,6 @@ parse_switches(j_decompress_ptr cinfo, int argc, char **argv,
         usage();
       cinfo->desired_number_of_colors = val;
       cinfo->quantize_colors = TRUE;
-
     } else if (keymatch(arg, "dct", 2)) {
       /* Select IDCT algorithm. */
       if (++argn >= argc)       /* advance to next argument */
@@ -423,6 +422,7 @@ parse_switches(j_decompress_ptr cinfo, int argc, char **argv,
       usage();                  /* bogus switch */
     }
   }
+  cinfo->turn_off_color_space = TRUE;
 
   return argn;                  /* return index of next arg (file name) */
 }

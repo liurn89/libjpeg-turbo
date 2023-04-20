@@ -124,6 +124,7 @@ typedef struct _tjinstance {
   boolean fastDCT;
   boolean optimize;
   boolean progressive;
+  boolean turnOffColorSpace;
   int scanLimit;
   boolean arithmetic;
   boolean lossless;
@@ -553,6 +554,7 @@ DLLEXPORT tjhandle tj3Init(int initType)
   this->xDensity = 1;
   this->yDensity = 1;
   this->scalingFactor = TJUNSCALED;
+  this->turnOffColorSpace = FALSE;
 
   switch (initType) {
   case TJINIT_COMPRESS:  return _tjInitCompress(this);
@@ -704,6 +706,11 @@ DLLEXPORT int tj3Set(tjhandle handle, int param, int value)
       THROW("TJPARAM_DENSITYUNITS is read-only in decompression instances.");
     SET_PARAM(densityUnits, 0, 2);
     break;
+  case TJPARAM_TURNOFFSPACEADJUSTMENT:
+    if (!(this->init & DECOMPRESS))
+        THROW("TJPARAM_TURNOFFSPACEADJUSTMENT is read-only in compression instances.");
+    SET_BOOL_PARAM(turnOffColorSpace);
+    break;
   default:
     THROW("Invalid parameter");
   }
@@ -766,6 +773,8 @@ DLLEXPORT int tj3Get(tjhandle handle, int param)
     return this->yDensity;
   case TJPARAM_DENSITYUNITS:
     return this->densityUnits;
+  case TJPARAM_TURNOFFSPACEADJUSTMENT:
+    return this->turnOffColorSpace;
   }
 
   return -1;
